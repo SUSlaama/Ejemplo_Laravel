@@ -1,6 +1,6 @@
 {
 	"preset": "laravel",
 	"rules": {
-		"strict_comparison": false
+		"strict_comparison": true
 	}
 }
