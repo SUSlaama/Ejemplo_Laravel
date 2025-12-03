@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-//Valida Contraseña Segura
+
+// Valida Contraseña Segura
 class DavidTest extends Controller
 {
     public function validatePassword(string $password): bool
