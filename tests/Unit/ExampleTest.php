@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Http\Controllers\DavidTest;
 use App\Http\Controllers\OperationsController;
 use PHPUnit\Framework\TestCase;
-use App\Http\Controllers\DavidTest;
 
 class ExampleTest extends TestCase
 {
@@ -25,7 +25,7 @@ class ExampleTest extends TestCase
         $this->assertEquals(13, $result);
     }
 
-    //Test David, validar contraseña segura
+    // Test David, validar contraseña segura
     public function test_validate_password(): void
     {
         $controller = new DavidTest;
