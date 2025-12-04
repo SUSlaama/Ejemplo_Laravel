@@ -36,6 +36,4 @@ class ExampleTest extends TestCase
         $this->assertNotNull($valid);
         $this->assertTrue($valid);
     }
-
-    //Prueba de despliegue en Azure
 }
