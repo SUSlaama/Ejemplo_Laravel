@@ -7,8 +7,8 @@ class MarlonManuelController extends Controller
     /**
      * Valida RFC o CURP según el tipo indicado.
      *
-     * @param string $input El texto a validar.
-     * @param string $type  "rfc" o "curp".
+     * @param  string  $input  El texto a validar.
+     * @param  string  $type  "rfc" o "curp".
      * @return bool|null True si es válido, false si es inválido, null si tipo desconocido.
      */
     public function validateId(string $input, string $type): ?bool
