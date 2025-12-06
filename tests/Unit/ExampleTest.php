@@ -121,6 +121,7 @@ class ExampleTest extends TestCase
         $unknown = $controller->validateId('ABC123', 'otro');
         $this->assertNull($unknown);
     }
+    
     // Prueba FernandoController: enmascarar número telefónico
     public function test_mask_phone_number(): void
     {
