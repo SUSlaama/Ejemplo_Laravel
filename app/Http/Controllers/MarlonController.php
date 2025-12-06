@@ -9,12 +9,11 @@ class MarlonController extends Controller
     /**
      * Calcula la edad a partir de una fecha de nacimiento.
      *
-     * @param string $Fecha formato Y-m-d
+     * @param string $date Formato Y-m-d
      * @return int|null Edad calculada
      */
     public function calculateAge(string $date): ?int
     {
-
         try {
             $birthDate = Carbon::createFromFormat('Y-m-d', $date);
         } catch (\Exception $e) {
