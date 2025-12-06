@@ -94,4 +94,34 @@ class ExampleTest extends TestCase
         $invalidResult = $controller->maskCreditCard('123');
         $this->assertNull($invalidResult);
     }
+
+    // Marlon Manuel: Validación de RFC y CURP
+public function test_validate_rfc_and_curp()
+{
+    $controller = new \App\Http\Controllers\MarlonManuelController;
+
+    // RFC válido
+    $validRfc = $controller->validateId('GODE561231GR8', 'rfc');
+    $this->assertTrue($validRfc);
+
+    // RFC inválido
+    $invalidRfc = $controller->validateId('INVALIDO123', 'rfc');
+    $this->assertFalse($invalidRfc);
+
+    // CURP válido
+    $validCurp = $controller->validateId('GODE561231HDFRRN09', 'curp');
+    $this->assertTrue($validCurp);
+
+    // CURP inválido
+    $invalidCurp = $controller->validateId('AAAA111111XXXXXX11', 'curp');
+    $this->assertFalse($invalidCurp);
+
+    // Tipo desconocido
+    $unknown = $controller->validateId('ABC123', 'otro');
+    $this->assertNull($unknown);
+}
+
+
+
+
 }
