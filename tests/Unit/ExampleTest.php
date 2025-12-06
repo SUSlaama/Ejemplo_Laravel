@@ -7,6 +7,7 @@ use App\Http\Controllers\DavidTest;
 use App\Http\Controllers\GabrielController;
 use App\Http\Controllers\OperationsController;
 use App\Http\Controllers\UrielController;
+use App\Http\Controllers\MarlonController;
 use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
@@ -93,5 +94,35 @@ class ExampleTest extends TestCase
         // Caso: Longitud inválida (muy corta)
         $invalidResult = $controller->maskCreditCard('123');
         $this->assertNull($invalidResult);
+    }
+
+    // Marlon
+
+    public function test_calculate_age_valid()
+    {
+        $controller = new MarlonController;
+
+        $result = $controller->calculateAge('2000-01-01');
+
+        $this->assertIsInt($result);
+        $this->assertGreaterThan(0, $result);
+    }
+
+    public function test_calculate_age_invalid_date()
+    {
+        $controller = new MarlonController;
+
+        $result = $controller->calculateAge('fecha-mala');
+
+        $this->assertNull($result);
+    }
+
+    public function test_calculate_age_future_date()
+    {
+        $controller = new MarlonController;
+
+        $result = $controller->calculateAge('3000-01-01');
+
+        $this->assertNull($result);
     }
 }
