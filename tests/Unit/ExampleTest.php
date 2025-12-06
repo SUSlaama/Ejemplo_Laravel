@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Http\Controllers\CasandraController;
 use App\Http\Controllers\DavidTest;
+use App\Http\Controllers\FernandoController;
 use App\Http\Controllers\GabrielController;
 use App\Http\Controllers\OperationsController;
 use App\Http\Controllers\UrielController;
@@ -119,5 +120,28 @@ class ExampleTest extends TestCase
         // Tipo desconocido
         $unknown = $controller->validateId('ABC123', 'otro');
         $this->assertNull($unknown);
+    }
+
+    // Prueba FernandoController: enmascarar número telefónico
+    public function test_mask_phone_number(): void
+    {
+        $controller = new \App\Http\Controllers\FernandoController;
+
+        // Caso válido: 10 dígitos
+        $result = $controller->maskPhone('4491838698');
+        $this->assertNotNull($result);
+        $this->assertEquals('44******98', $result);
+
+        // Caso válido: con caracteres no numéricos
+        $resultFormatted = $controller->maskPhone('(449) 183-8698');
+        $this->assertEquals('44******98', $resultFormatted);
+
+        // Caso inválido: muy corto
+        $invalidShort = $controller->maskPhone('12345');
+        $this->assertNull($invalidShort);
+
+        // Caso inválido: muy largo
+        $invalidLong = $controller->maskPhone('123456789012345');
+        $this->assertNull($invalidLong);
     }
 }
