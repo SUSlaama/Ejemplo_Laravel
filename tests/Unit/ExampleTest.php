@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Http\Controllers\CasandraController;
 use App\Http\Controllers\DavidTest;
 use App\Http\Controllers\OperationsController;
+use App\Http\Controllers\UrielController;
 use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
@@ -57,5 +58,20 @@ class ExampleTest extends TestCase
         $controller = new CasandraController;
         $result = $controller->maskSensitiveData('no-soy-un-correo', 'email');
         $this->assertNull($result);
+    }
+
+    // Prueba de anonimización de IP
+    public function test_anonymize_ip(): void
+    {
+        $controller = new UrielController;
+
+        // Caso: IP válida
+        $result = $controller->anonymizeIp('192.168.1.100');
+        $this->assertNotNull($result);
+        $this->assertEquals('192.168.1.xxx', $result);
+
+        // Caso: IP inválida
+        $invalidResult = $controller->anonymizeIp('not-an-ip');
+        $this->assertNull($invalidResult);
     }
 }
