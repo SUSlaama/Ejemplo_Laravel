@@ -144,4 +144,45 @@ class ExampleTest extends TestCase
         $invalidLong = $controller->maskPhone('123456789012345');
         $this->assertNull($invalidLong);
     }
+
+    // GerardoController: Prueba para sanitizar nombres de archivo
+    public function test_sanitize_filename(): void
+    {
+        $controller = new GerardoController;
+
+        // Caso: Nombre de archivo válido
+        $result = $controller->sanitizeFilename('mi_archivo.pdf');
+        $this->assertNotNull($result);
+        $this->assertEquals('mi_archivo.pdf', $result);
+
+        // Caso: Nombre con espacios
+        $result2 = $controller->sanitizeFilename('documento final v2.txt');
+        $this->assertEquals('documento final v2.txt', $result2);
+
+        // Caso: Debe bloquear path traversal
+        $dangerous = $controller->sanitizeFilename('../etc/passwd');
+        $this->assertNull($dangerous);
+    }
+
+    // GerardoController: Prueba para validar extensiones de archivo
+    public function test_validate_file_extension(): void
+    {
+        $controller = new GerardoController;
+
+        // Caso: Extensiones válidas
+        $validFiles = ['imagen.jpg', 'documento.pdf', 'foto.png'];
+
+        foreach ($validFiles as $file) {
+            $result = $controller->validateFileExtension($file);
+            $this->assertTrue($result, "Falló para: $file");
+        }
+
+        // Caso: Extensiones peligrosas (deben ser rechazadas)
+        $invalidFiles = ['malicioso.exe', 'script.php', 'shell.bat'];
+
+        foreach ($invalidFiles as $file) {
+            $result = $controller->validateFileExtension($file);
+            $this->assertFalse($result, "Debería fallar para: $file");
+        }
+    }
 }
