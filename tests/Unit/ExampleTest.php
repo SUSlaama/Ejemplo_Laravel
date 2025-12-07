@@ -6,6 +6,7 @@ use App\Http\Controllers\CasandraController;
 use App\Http\Controllers\DavidTest;
 use App\Http\Controllers\FernandoController;
 use App\Http\Controllers\GabrielController;
+use App\Http\Controllers\GerardoController;
 use App\Http\Controllers\OperationsController;
 use App\Http\Controllers\UrielController;
 use PHPUnit\Framework\TestCase;
