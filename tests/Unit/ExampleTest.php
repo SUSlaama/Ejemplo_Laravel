@@ -113,6 +113,7 @@ class ExampleTest extends TestCase
         // CURP válido
         $validCurp = $controller->validateId('GODE561231HDFRRN09', 'curp');
         $this->assertTrue($validCurp);
+        $this->assertNotNull($validCurp);
 
         // CURP inválido
         $invalidCurp = $controller->validateId('AAAA111111XXXXXX11', 'curp');
