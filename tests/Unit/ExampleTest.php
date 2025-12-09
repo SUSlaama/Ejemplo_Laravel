@@ -71,7 +71,7 @@ class ExampleTest extends TestCase
         // Caso: IP válida
         $result = $controller->anonymizeIp('192.168.1.100');
         $this->assertNotNull($result);
-        $this->assertEquals('192.168.1.xxx', $result);
+        $this->assertEquals('192.168.1.***', $result);
 
         // Caso: IP inválida
         $invalidResult = $controller->anonymizeIp('not-an-ip');
