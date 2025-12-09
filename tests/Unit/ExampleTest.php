@@ -77,7 +77,7 @@ class ExampleTest extends TestCase
         $this->assertNull($invalidResult);
     }
 
-    // Enmascarar tarjeta de crédito
+    // Enmascarar tarjeta de crédito 32
     public function test_mask_credit_card(): void
     {
         $controller = new GabrielController;
