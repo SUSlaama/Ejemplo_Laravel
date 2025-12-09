@@ -6,6 +6,7 @@ use App\Http\Controllers\CasandraController;
 use App\Http\Controllers\DavidTest;
 use App\Http\Controllers\FernandoController;
 use App\Http\Controllers\GabrielController;
+use App\Http\Controllers\GerardoController;
 use App\Http\Controllers\OperationsController;
 use App\Http\Controllers\UrielController;
 use PHPUnit\Framework\TestCase;
@@ -13,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 class ExampleTest extends TestCase
 {
     /**
-     * A basic test example. Prueba que true sea true
+     * A basic test example.
      */
     public function test_that_true_is_true(): void
     {
@@ -77,7 +78,7 @@ class ExampleTest extends TestCase
         $this->assertNull($invalidResult);
     }
 
-    // Enmascarar tarjeta de crédito
+    // Enmascarar tarjeta de crédito 32
     public function test_mask_credit_card(): void
     {
         $controller = new GabrielController;
@@ -112,6 +113,7 @@ class ExampleTest extends TestCase
         // CURP válido
         $validCurp = $controller->validateId('GODE561231HDFRRN09', 'curp');
         $this->assertTrue($validCurp);
+        $this->assertNotNull($validCurp);
 
         // CURP inválido
         $invalidCurp = $controller->validateId('AAAA111111XXXXXX11', 'curp');
@@ -143,5 +145,46 @@ class ExampleTest extends TestCase
         // Caso inválido: muy largo
         $invalidLong = $controller->maskPhone('123456789012345');
         $this->assertNull($invalidLong);
+    }
+
+    // GerardoController: Prueba para sanitizar nombres de archivo
+    public function test_sanitize_filename(): void
+    {
+        $controller = new GerardoController;
+
+        // Caso: Nombre de archivo válido
+        $result = $controller->sanitizeFilename('mi_archivo.pdf');
+        $this->assertNotNull($result);
+        $this->assertEquals('mi_archivo.pdf', $result);
+
+        // Caso: Nombre con espacios
+        $result2 = $controller->sanitizeFilename('documento final v2.txt');
+        $this->assertEquals('documento final v2.txt', $result2);
+
+        // Caso: Debe bloquear path traversal
+        $dangerous = $controller->sanitizeFilename('../etc/passwd');
+        $this->assertNull($dangerous);
+    }
+
+    // GerardoController: Prueba para validar extensiones de archivo
+    public function test_validate_file_extension(): void
+    {
+        $controller = new GerardoController;
+
+        // Caso: Extensiones válidas
+        $validFiles = ['imagen.jpg', 'documento.pdf', 'foto.png'];
+
+        foreach ($validFiles as $file) {
+            $result = $controller->validateFileExtension($file);
+            $this->assertTrue($result, "Falló para: $file");
+        }
+
+        // Caso: Extensiones peligrosas (deben ser rechazadas)
+        $invalidFiles = ['malicioso.exe', 'script.php', 'shell.bat'];
+
+        foreach ($invalidFiles as $file) {
+            $result = $controller->validateFileExtension($file);
+            $this->assertFalse($result, "Debería fallar para: $file");
+        }
     }
 }
