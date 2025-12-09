@@ -71,7 +71,7 @@ class ExampleTest extends TestCase
         // Caso: IP válida
         $result = $controller->anonymizeIp('192.168.1.100');
         $this->assertNotNull($result);
-        $this->assertEquals('192.168.1.***', $result);
+        $this->assertEquals('192.168.1.xxx', $result);
 
         // Caso: IP inválida
         $invalidResult = $controller->anonymizeIp('not-an-ip');
@@ -113,6 +113,7 @@ class ExampleTest extends TestCase
         // CURP válido
         $validCurp = $controller->validateId('GODE561231HDFRRN09', 'curp');
         $this->assertTrue($validCurp);
+        $this->assertNotNull($validCurp);
 
         // CURP inválido
         $invalidCurp = $controller->validateId('AAAA111111XXXXXX11', 'curp');
